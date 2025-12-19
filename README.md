@@ -90,7 +90,7 @@ A working demo video is included showing:
 - Coupon application
 - Checkout flow
 
-![Working Video](screenshots/video.mp4)
+[Working Video](screenshots/video.mp4)
 
 ---
 
