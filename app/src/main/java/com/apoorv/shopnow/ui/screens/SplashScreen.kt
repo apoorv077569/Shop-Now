@@ -47,14 +47,18 @@ fun SplashScreen(onNavigate: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF0F172A)),
+            .background(Color(0xFF0D1B2A)),
         contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Image(painter = painterResource(R.drawable.app_logo), contentDescription = null)
+            Image(
+                painter = painterResource(R.drawable.logo_foreground),
+                contentDescription = "App Logo",
+                modifier = Modifier.size(120.dp)
+                    .scale(scale.value))
             Spacer(Modifier.height(10.dp))
             Text(
                 "Shop Now",
