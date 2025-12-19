@@ -71,11 +71,13 @@ The app demonstrates product listing, cart management, coupon logic, tax calcula
 
 Screenshots are available in the `screenshots/` folder:
 
-- [Splash Screen](screenshots/01_splash.png)
-- [Product List](screenshots/02_products.png)
-- [Cart Screen](screenshots/03_cart.png)
-- [Coupon Popup](screenshots/04_coupon.png)
-- [Checkout Success Screen](screenshots/05_success.png)
+| Splash Screen | Product List | Cart |
+|--------------|-------------|------|
+| ![Splash](screenshots/01_splash.png) | ![Products](screenshots/02_products.png) | ![Cart](screenshots/03_cart.png) |
+
+| Coupon Popup | Checkout Success |
+|-------------|------------------|
+| ![Coupon](screenshots/04_coupon.png) | ![Success](screenshots/05_success.png) |
 
 ---
 

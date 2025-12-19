@@ -1,5 +1,6 @@
 package com.apoorv.shopnow.ui.components
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -34,6 +36,7 @@ fun ProductCard(
     product: Product,
     onAdd: () -> Unit
 ) {
+    val context = LocalContext.current
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
@@ -96,7 +99,14 @@ fun ProductCard(
                 Spacer(Modifier.height(8.dp))
 
                 Button(
-                    onClick = onAdd,
+                    onClick = {
+                        onAdd()
+                        Toast.makeText(
+                            context, "${product.name} added to cart",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    },
+
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(50),
                     colors = ButtonDefaults.buttonColors(
