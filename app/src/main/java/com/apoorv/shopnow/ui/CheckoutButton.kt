@@ -21,35 +21,18 @@ import com.apoorv.shopnow.viewmodel.CartViewModel
 
 @Composable
 fun CheckoutButton(
-    nav: NavController,
-    isCartEmpty : Boolean
+    onCheckout: () -> Unit,
+    isCartEmpty: Boolean
 ) {
-    var show by remember { mutableStateOf(false) }
-
     Button(
-        onClick = {
-            show=true
-        },
-        modifier = Modifier.fillMaxWidth()
+        onClick = onCheckout,
+        modifier = Modifier
+            .fillMaxWidth()
             .height(56.dp),
         enabled = !isCartEmpty
     ) {
         Text(
-            text = if (isCartEmpty) "Cart is Empty"
-            else "Checkout"
+            text = if (isCartEmpty) "Cart is Empty" else "Checkout"
         )
-    }
-    if (show){
-        val composition by rememberLottieComposition(
-            LottieCompositionSpec.RawRes(R.raw.confetti)
-        )
-        LottieAnimation(composition, iterations = 1)
-
-        LaunchedEffect(Unit) {
-            kotlinx.coroutines.delay(1200)
-            nav.navigate("success"){
-                popUpTo("cart"){inclusive=true}
-            }
-        }
     }
 }

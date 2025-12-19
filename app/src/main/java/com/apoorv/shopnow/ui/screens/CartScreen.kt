@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +35,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.apoorv.shopnow.R
 import com.apoorv.shopnow.ui.CheckoutButton
 import com.apoorv.shopnow.ui.components.CartItemRow
 import com.apoorv.shopnow.ui.components.CouponBottomSheet
@@ -48,6 +54,8 @@ fun CartScreen(
 ) {
     val items by vm.cartItems.collectAsState()
     var showCouponSheet by remember { mutableStateOf(false) }
+    var showCheckoutAnimation by remember { mutableStateOf(false) }
+
 
     Scaffold(
         topBar = {
@@ -91,9 +99,6 @@ fun CartScreen(
                 }
             }
             Spacer(Modifier.height(16.dp))
-//            CouponSection(vm, items)
-//            Spacer(Modifier.height(5.dp))
-
             OrderSummary(items, vm)
             Spacer(Modifier.height(6.dp))
             OutlinedButton(
@@ -111,13 +116,44 @@ fun CartScreen(
             )
             Spacer(Modifier.height(16.dp))
 //            Spacer(Modifier.height(16.dp))
-            CheckoutButton(navController, false)
+            CheckoutButton(
+                isCartEmpty = items.isEmpty(),
+                onCheckout = {
+                    showCheckoutAnimation = true
+                }
+            )
         }
-        if (showCouponSheet){
+        if (showCheckoutAnimation) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                val composition by rememberLottieComposition(
+                    LottieCompositionSpec.RawRes(R.raw.confetti)
+                )
+
+                LottieAnimation(
+                    composition = composition,
+                    iterations = 1,
+                    modifier = Modifier.size(250.dp)
+                )
+
+                LaunchedEffect(Unit) {
+                    kotlinx.coroutines.delay(1200)
+                    showCheckoutAnimation = false
+                    navController.navigate("success") {
+                        popUpTo("cart") { inclusive = true }
+                    }
+                }
+            }
+        }
+
+        if (showCouponSheet) {
             CouponBottomSheet(
                 vm,
                 items,
-                onDismiss = {showCouponSheet = false}
+                onDismiss = { showCouponSheet = false }
             )
         }
     }
